@@ -29,7 +29,7 @@ class immutableSample {
 	}
 
 	public function setInt1($int) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->int_1 = $int;
 			return $this;
 		} else {
@@ -42,7 +42,7 @@ class immutableSample {
 	}
 
 	public function setInt2($int) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->int_2 = $int;
 			return $this;
 		} else {
@@ -55,7 +55,7 @@ class immutableSample {
 	}
 
 	public function setInt3($int) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->int_3 = $int;
 			return $this;
 		} else {
@@ -68,7 +68,7 @@ class immutableSample {
 	}
 
 		public function setStr1($str) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->str_1 = $str;
 			return $this;
 		} else {
@@ -81,7 +81,7 @@ class immutableSample {
 	}
 
 	public function setStr2($str) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->str_2 = $str;
 			return $this;
 		} else {
@@ -94,7 +94,7 @@ class immutableSample {
 	}
 
 	public function setStr3($str) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->str_3 = $str;
 			return $this;
 		} else {
@@ -107,7 +107,7 @@ class immutableSample {
 	}
 
 	public function setDat1(DateTime $dat) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->dat_1 = $dat;
 			return $this;
 		} else {
@@ -120,7 +120,7 @@ class immutableSample {
 	}
 
 	public function setDat2(DateTime $dat) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->dat_2 = $dat;
 			return $this;
 		} else {
@@ -133,7 +133,7 @@ class immutableSample {
 	}
 
 	public function setDat3(DateTime $dat) {
-		if($mutable) {
+		if($this->mutable) {
 			$this->dat_3 = $dat;
 			return $this;
 		} else {
