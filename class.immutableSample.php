@@ -1,4 +1,7 @@
 <?php
+/*
+	A prototype class with some setter methods, that may be operated in a mutable, as well as in an immutable fashion.
+*/
 
 class immutableSample {
 	protected $int_1;
