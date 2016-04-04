@@ -9,77 +9,87 @@
 
 
 	require_once 'class.immutableSample.php';
-	function applySetAndMeasure(array $set, immutableSample &$obj, array &$dt, array &$db, $num_op) {
+	function applySetAndMeasure(array $set, immutableSample &$obj) {
 		$func = array_rand($set);
 		switch($func) {
 			case 'setInt1':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setInt1($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setInt1($a);
+				break;
+			case 'NOsetInt1':
+				$a = $set[$func];
+				$obj = $obj;
 				break;
 			case 'setInt2':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setInt2($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setInt2($a);
+				break;
+			case 'NOsetInt2':
+				$a = $set[$func];
+				$obj = $obj;
 				break;
 			case 'setInt3':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setInt3($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setInt3($a);
+				break;
+			case 'NOsetInt3':
+				$a = $set[$func];
+				$obj = $obj;
 				break;
 			case 'setStr1':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setStr1($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setStr1($a);
+				break;
+			case 'NOsetStr1':
+				$a = $set[$func];
+				$obj = $obj;
 				break;
 			case 'setStr2':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setStr2($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setStr2($a);
+				break;
+			case 'NOsetStr2':
+				$a = $set[$func];
+				$obj = $obj;
 				break;
 			case 'setStr3':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setStr3($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setStr3($a);
+				break;
+			case 'NOsetStr3':
+				$a = $set[$func];
+				$obj = $obj;
 				break;
 			case 'setDat1':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setDat1($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setDat1($a);
+				break;
+			case 'NOsetDat1':
+				$a = $set[$func];
+				$obj = $obj;
 				break;
 			case 'setDat2':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setDat2($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setDat2($a);
+				break;
+			case 'NOsetDat2':
+				$a = $set[$func];
+				$obj = $obj;
 				break;
 			case 'setDat3':
-				$b_i = memory_get_usage();
-				$t_i = microtime(true);
-				$obj2 = $obj->setDat3($set[$func]);
-				$dt[$num_op] = microtime(true) - $t_i;
-				$db[$num_op] = memory_get_usage() - $b_i;
+				$a = $set[$func];
+				$obj = $obj->setDat3($a);
 				break;
+			case 'NOsetDat3':
+				$a = $set[$func];
+				$obj = $obj;
+				break;
+			default:
+				die($func);
 		}
-		return $obj2;
 	}
 
-	function statistics(array $data) {
+/*	function statistics(array $data) {
 		$n = count($data);
 		$s_val = 0;
 		$s_val_sq = 0;
@@ -89,8 +99,8 @@
 		}
 		$avg = $s_val / $n; //average.
 		$sigma = sqrt(($s_val_sq - $s_val*$s_val/$n)/($n - 1)); //standart deviation.
-		return array("average" => $avg, "sigma" => $sigma);
-	}
+		return array("avg"=>$avg,"sigma"=>$sigma);
+	}*/
 
 	$sets = array(
 				array('setInt1' => 1, 'setInt2' => 2, 'setInt3' => 3
@@ -116,47 +126,52 @@
 						,'setDat1'=> new DateTime('2016-11-01'), 'setDat2' => new DateTime('2016-01-22'), 'setDat3' => new DateTime('2023-01-03'))
 					);
 
-	$num_tr = 100;
+	$sets_offs = array(
+				array('NOsetInt1' => 1, 'NOsetInt2' => 2, 'NOsetInt3' => 3
+						,'NOsetStr1' => 'a' ,'NOsetStr2'=> 'b', 'NOsetStr3' => 'c'
+						,'NOsetDat1'=> new DateTime('2016-01-01'), 'NOsetDat2' => new DateTime('2016-01-02'), 'NOsetDat3' => new DateTime('2016-01-03'))
+				,array('NOsetInt1' => 2000, 'NOsetInt2' => 3, 'NOsetInt3' => 20
+						,'NOsetStr1' => 'foo', 'NOsetStr2' => 'bar', 'NOsetStr3' => 'baz'
+						,'NOsetDat1' => new DateTime('2012-01-01'), 'NOsetDat2' => new DateTime('2012-01-02'), 'NOsetDat3' => new DateTime('2012-01-02'))
+				,array('NOsetInt1' => 10, 'NOsetInt2' => 3, 'NOsetInt3' => 20
+						,'NOsetStr1' => 'fqoo', 'NOsetStr2' => 'bwar', 'NOsetStr3' => 'baxz'
+						,'NOsetDat1' => new DateTime('2012-02-01'), 'NOsetDat2' => new DateTime('1922-02-01'), 'NOsetDat3' =>  new DateTime('2012-11-02'))
+				,array('NOsetInt1' => 3, 'NOsetInt2' => 23, 'NOsetInt3' => 220
+						,'NOsetStr1' => 'foso', 'NOsetStr2' => 'null' , 'NOsetStr3' => 'bsaz'
+						,'NOsetDat1' => new DateTime('2012-02-01'), 'NOsetDat2' => new DateTime('2013-02-01'), 'NOsetDat3' => new DateTime('2012-12-01'))
+				,array('NOsetInt1' =>  21, 'NOsetInt2' => 42, 'NOsetInt3' => 220
+						,'NOsetStr1' => 'foo', 'NOsetStr2' => 'basadasr', 'NOsetStr3' => 'null'
+						,'NOsetDat1' => new DateTime('2012-02-01'), 'NOsetDat2' => new DateTime('2013-02-01'), 'NOsetDat3' => new DateTime('2012-12-01'))
+				,array('NOsetInt1' => 1111, 'NOsetInt2' => 11212, 'NOsetInt3' => 220
+						,'NOsetStr1' => 'foo', 'NOsetStr2' => 'bar', 'NOsetStr3' => 'baz'
+						,'NOsetDat1' => new DateTime('2012-02-01'), 'NOsetDat2' => new DateTime('2013-02-01'), 'NOsetDat3' => new DateTime('2012-12-01'))
+				,array('NOsetInt1' => 2221, 'NOsetInt2' => 0, 'NOsetInt3' => 3
+						,'NOsetStr1' => 'a' ,'NOsetStr2'=> 'b', 'NOsetStr3' => 'c'
+						,'NOsetDat1'=> new DateTime('2016-11-01'), 'NOsetDat2' => new DateTime('2016-01-22'), 'NOsetDat3' => new DateTime('2023-01-03'))
+					);
 
-	$dt = array();
-	$db = array();
-	$obj = new immutableSample(1,2,3,'a','b','c',new DateTime('2016-11-01'), new DateTime('2016-01-22'), new DateTime('2023-01-03'), true);
+	$num_tr = 100000;
+	$mut = $_GET["mut"];
+	$ref = $_GET["ref"];
+	echo $mut ? "mutable" : "nonmutable";
+	echo "<br>";
+	echo $ref ? "reference" : "measurement";
+	echo "<br>";
+	$obj = new immutableSample(1,2,3,'a','b','c',new DateTime('2016-11-01'), new DateTime('2016-01-22'), new DateTime('2023-01-03'), $mut);
 
+	$sets_u = $ref ? $sets_offs : $sets;
+
+
+	$t_i = microtime(true);
+	$b_i = memory_get_usage();
 	for($i = 0; $i < $num_tr; $i++) {
-
-		$set = $sets[rand(0,count($sets)-1)];
-
-		$obj = applySetAndMeasure($set, $obj, $dt, $db, $i);
+		$set = $sets[rand(0,count($sets_u) - 1)];
+		applySetAndMeasure($set, $obj);
 	}
-	echo "mutable: <br>";
-	var_dump($db);
-	echo '<br>';
-	var_dump($dt);
-	echo '<hr>statistics:<br>';
+	$db = memory_get_usage() - $b_i;
+	$dt = microtime(true) - $t_i;
 
-	$statistics_t = statistics($dt);
-	$statistics_b = statistics($db);
-	echo " time: avg: ".$statistics_t["average"]." standart deviation: ".$statistics_t["sigma"]."<br>";
-	echo " memory: avg: ".$statistics_b["average"]." standart deviation: ".$statistics_b["sigma"]."<br>";
-	echo '<hr><hr>';
-	$obj = new immutableSample(1,2,3,'a','b','c',new DateTime('2016-11-01'), new DateTime('2016-01-22'), new DateTime('2023-01-03'), false);
-	$dt = array();
-	$db = array();
-	for($i = 0; $i < $num_tr; $i++) {
 
-		$set = $sets[rand(0,count($sets)-1)];
+	echo "memory: ".$db." time: ".$dt;
 
-		$obj = applySetAndMeasure($set, $obj, $dt, $db, $i);
-	}
-	echo "non-mutable: <br>";
-	var_dump($db);
-	echo '<br>';
-	var_dump($dt);
-	echo '<hr>';
-
-	$statistics_t = statistics($dt);
-	$statistics_b = statistics($db);
-	echo " time: avg: ".$statistics_t["average"]." standart deviation: ".$statistics_t["sigma"]."<br>";
-	echo " memory: avg: ".$statistics_b["average"]." standart deviation: ".$statistics_b["sigma"]."<br>";
-	echo '<hr>';
-	die();
+	die("<br>finished");
