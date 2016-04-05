@@ -11,77 +11,60 @@
 	require_once 'class.immutableSample.php';
 	function applySetAndMeasure(array $set, immutableSample &$obj) {
 		$func = array_rand($set);
+		$a = $set[$func];
 		switch($func) {
 			case 'setInt1':
-				$a = $set[$func];
 				$obj = $obj->setInt1($a);
 				break;
 			case 'NOsetInt1':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			case 'setInt2':
-				$a = $set[$func];
 				$obj = $obj->setInt2($a);
 				break;
 			case 'NOsetInt2':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			case 'setInt3':
-				$a = $set[$func];
 				$obj = $obj->setInt3($a);
 				break;
 			case 'NOsetInt3':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			case 'setStr1':
-				$a = $set[$func];
 				$obj = $obj->setStr1($a);
 				break;
 			case 'NOsetStr1':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			case 'setStr2':
-				$a = $set[$func];
 				$obj = $obj->setStr2($a);
 				break;
 			case 'NOsetStr2':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			case 'setStr3':
-				$a = $set[$func];
 				$obj = $obj->setStr3($a);
 				break;
 			case 'NOsetStr3':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			case 'setDat1':
-				$a = $set[$func];
 				$obj = $obj->setDat1($a);
 				break;
 			case 'NOsetDat1':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			case 'setDat2':
-				$a = $set[$func];
 				$obj = $obj->setDat2($a);
 				break;
 			case 'NOsetDat2':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			case 'setDat3':
-				$a = $set[$func];
 				$obj = $obj->setDat3($a);
 				break;
 			case 'NOsetDat3':
-				$a = $set[$func];
 				$obj = $obj;
 				break;
 			default:
@@ -102,7 +85,7 @@
 		return array("avg"=>$avg,"sigma"=>$sigma);
 	}*/
 
-	$sets = array(
+	$sets1 = array(
 				array('setInt1' => 1, 'setInt2' => 2, 'setInt3' => 3
 						,'setStr1' => 'a' ,'setStr2'=> 'b', 'setStr3' => 'c'
 						,'setDat1'=> new DateTime('2016-01-01'), 'setDat2' => new DateTime('2016-01-02'), 'setDat3' => new DateTime('2016-01-03'))
@@ -126,7 +109,7 @@
 						,'setDat1'=> new DateTime('2016-11-01'), 'setDat2' => new DateTime('2016-01-22'), 'setDat3' => new DateTime('2023-01-03'))
 					);
 
-	$sets_offs = array(
+	$sets2 = array(
 				array('NOsetInt1' => 1, 'NOsetInt2' => 2, 'NOsetInt3' => 3
 						,'NOsetStr1' => 'a' ,'NOsetStr2'=> 'b', 'NOsetStr3' => 'c'
 						,'NOsetDat1'=> new DateTime('2016-01-01'), 'NOsetDat2' => new DateTime('2016-01-02'), 'NOsetDat3' => new DateTime('2016-01-03'))
@@ -150,28 +133,26 @@
 						,'NOsetDat1'=> new DateTime('2016-11-01'), 'NOsetDat2' => new DateTime('2016-01-22'), 'NOsetDat3' => new DateTime('2023-01-03'))
 					);
 
-	$num_tr = 100000;
-	$mut = $_GET["mut"];
-	$ref = $_GET["ref"];
-	echo $mut ? "mutable" : "nonmutable";
-	echo "<br>";
-	echo $ref ? "reference" : "measurement";
-	echo "<br>";
+	$opts = getopt("n:m:r:");
+
+	$mut = (int)$opts["m"];
+	$ref = (int)$opts["r"];
+	$num_tr = (int)$opts["n"];
+
 	$obj = new immutableSample(1,2,3,'a','b','c',new DateTime('2016-11-01'), new DateTime('2016-01-22'), new DateTime('2023-01-03'), $mut);
 
-	$sets_u = $ref ? $sets_offs : $sets;
+	$sets_u = $ref ? $sets2 : $sets1;
 
 
 	$t_i = microtime(true);
 	$b_i = memory_get_usage();
 	for($i = 0; $i < $num_tr; $i++) {
-		$set = $sets[rand(0,count($sets_u) - 1)];
+		$set = $sets_u[rand(0,count($sets_u) - 1)];
+	//	var_dump($set);
+	//	echo "<hr>";
 		applySetAndMeasure($set, $obj);
 	}
 	$db = memory_get_usage() - $b_i;
 	$dt = microtime(true) - $t_i;
 
-
-	echo "memory: ".$db." time: ".$dt;
-
-	die("<br>finished");
+	echo $num_tr."\t".$db."\t".$dt.PHP_EOL;
