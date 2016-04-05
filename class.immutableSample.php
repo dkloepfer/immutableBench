@@ -16,6 +16,8 @@ class immutableSample {
 	protected $dat_2;
 	protected $dat_3;
 
+	protected $mutable;
+
 	public function __construct($int_1,$int_2,$int_3
 								,$str_1,$str_2,$str_3
 								,DateTime $dat_1, DateTime $dat_2, DateTime $dat_3,  $mutable) {
