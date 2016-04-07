@@ -4,8 +4,9 @@ This repository provides you with a benchmarking script to check temporal and me
 
 Our sample, **class.immutableSample.php**, is a simple object with a series of public setters. The function of it's setters depends on the **$mutable** property of the object. They may be operated in two distinct ways:
 1. an immuable way, i.e. a new immutable object, being identical to the object the operation is called on up to the changed property, will be created, whenever you try to set a property. 
-2. a mutable way, i.e. the object itself will be changed. 
-We create such an object and perform setter operations on them. The amount of these operations is variable and the type of any single operation is chosen randomly at runtime, we thus hope to represent a broad variety of usecases with this benchmark. The object, on which the setter is called, is replaced by the return value of the setter operation, being the same object in the mutable case and a new object with one different property in the immutable case. Please confer class.immutableSample.php for further information.
+2. a mutable way, i.e. the object itself will be changed.
+We create such an object and perform setter operations on it. The amount of these operations is variable and the type of any single operation is chosen randomly at runtime, we thus hope to represent a broad variety of usecases with this benchmark. The object, on which the setter is called, is replaced by the return value of the setter operation, being the same object with one changed property in the mutable case and a new object with one changed property in the immutable case. Please confer class.immutableSample.php for further information.
+
 We also capture reference data in additional runs, in which we perform no setter operations on the object, just to measure the environmental offset in time and memory consumprion.
 
 The results are presented in following two graphs:
