@@ -12,7 +12,7 @@ In **runner.php** we create such an object and perform setter operations on it. 
 
 The execution time and memory consumption we capture using PHP's native **microtime** and **memory_get_usage** functions. We also capture reference data in additional runs, in which we perform no setter operations on the object, just to measure the environmental offset in execution time and memory consumprion.
 
-The results are presented in following two graphs:
+The results are presented in the two following graphs:
 
 ![graph of temporal performance](result_t.png "graph of temporal performance")
 
