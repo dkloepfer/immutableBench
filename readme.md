@@ -2,7 +2,7 @@
 
 This repository provides you with a benchmarking script to check temporal and memory performance difference between mutable and immutable objects. We find an increase in running time, but no change in memory consumption. Allthough there _is_ an increase in running time, it does not change the order of magnitude. In our case we find an average time difference of about 2E-6 seconds per operation. Assuming 10E3 operations per pageload, we expect that once we have a large offset due to the environment (other objects, which are not immutable, as well as database interaction) it will not be possible to tell the difference.
 
-Our sample, **class.immutableSample.php** , is a simple object with a series of public setter that may operate in an immuable or a mutable way depending on the **$mutable** property. We create such an object and perform setter operations on them. The ammount of this operations is variable and the type of any single operation is chosen randomly at runtime, we thus hope to represent a broad variety of usecases with this benchmark. 
+Our sample, **class.immutableSample.php**, is a simple object with a series of public setter that may operate in an immuable (a new immutable objects will be created, whenever you try to set a property, being identical to the object the operation is called on, up to the changed property) or a mutable (the object itself will be changed) way depending on the **$mutable** property. We create such an object and perform setter operations on them. The ammount of this operations is variable and the type of any single operation is chosen randomly at runtime, we thus hope to represent a broad variety of usecases with this benchmark. 
 
 The results are presented in folloing two graphs:
 
