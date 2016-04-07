@@ -22,3 +22,6 @@ Here we see the execution time depending on the numbers of operation. As expecte
 
 Here we see the memory consumption depending on the numbers of operation. It is equal for both, mutable and immutable, objects and is independent of the amount of operations. The reason for this is the way of memory allocation of PHP. It uses reference counting, i.e. once an object is not referenced anymore, its memory is released.
 
+##Disclamer
+
+The code presented in this repository is free for use in any context. However, no guarantees are given and any usage is at own risk.
